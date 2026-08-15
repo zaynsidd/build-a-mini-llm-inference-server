@@ -10,7 +10,8 @@ import numpy as np
 def stable_softmax(logits):
     # TODO: compute a numerically stable softmax over the last axis of logits.
     maximum = np.max(logits, axis = -1, keepdims = True)
-    translated = np.exp(logits-maximum)
+    translated = np.subtract(logits, maximum)
+    np.exp(translated, out = translated)
     return translated/np.sum(translated, axis = -1, keepdims = True)
 
 # Step 2 - apply_temperature (not yet solved)
