@@ -22,8 +22,20 @@ def apply_temperature(logits, temperature):
     
     return logits / temperature
 
-# Step 3 - top_k_filter (not yet solved)
-# TODO: implement
+# Step 3 - top_k_filter
+import numpy as np
+
+def top_k_filter(logits, k):
+    """Mask logits outside the top-k per row to -inf."""
+    # TODO: keep only the k largest logits along the last axis, set the rest to -inf
+    shape = logits.shape
+
+    if k >= shape[-1]:
+        return logits
+
+    largest_k = np.partition(logits, -k, axis=-1)[..., shape[-1]-k:shape[-1]-k+1]
+
+    return np.where(largest_k <= logits, logits, -np.inf)
 
 # Step 4 - top_p_filter (not yet solved)
 # TODO: implement
