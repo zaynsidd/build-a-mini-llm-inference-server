@@ -61,7 +61,7 @@ def sample_from_probs(probs, rng):
 # Step 6 - greedy_select
 def greedy_select(logits):
     # TODO: return the index of the maximum logit (ties -> lowest index).
-    return np.argmax(logits)
+    return int(np.argmax(logits))
 
 # Step 7 - build_vocab (not yet solved)
 # TODO: implement
