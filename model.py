@@ -51,8 +51,12 @@ def top_p_filter(logits, p):
 
     return np.where(mask, logits, -np.inf)
 
-# Step 5 - sample_from_probs (not yet solved)
-# TODO: implement
+# Step 5 - sample_from_probs
+def sample_from_probs(probs, rng):
+    # TODO: draw a single token id from the categorical distribution probs using rng
+    cumulative = np.cumsum(probs)
+    rand_num = rng.random()
+    return int(np.searchsorted(cumulative, rand_num))
 
 # Step 6 - greedy_select (not yet solved)
 # TODO: implement
