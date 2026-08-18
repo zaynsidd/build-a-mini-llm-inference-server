@@ -37,8 +37,19 @@ def top_k_filter(logits, k):
 
     return np.where(largest_k <= logits, logits, -np.inf)
 
-# Step 4 - top_p_filter (not yet solved)
-# TODO: implement
+# Step 4 - top_p_filter
+def top_p_filter(logits, p):
+    # TODO: keep smallest set of tokens whose cumulative prob >= p, mask the rest to -inf.
+    
+    softmaxed = stable_softmax(logits)
+    indices = np.argsort(-softmaxed, axis = -1)
+    sorted_softmaxes = np.take_along_axis(softmaxed, indices, axis = -1)
+    cumulative = np.cumsum(sorted_softmaxes, axis = -1)
+    
+    mask = (cumulative - sorted_softmaxes) < p
+    np.put_along_axis(sorted_softmaxes, indices, cumulative, axis = -1)
+
+    return np.where(mask, logits, -np.inf)
 
 # Step 5 - sample_from_probs (not yet solved)
 # TODO: implement
