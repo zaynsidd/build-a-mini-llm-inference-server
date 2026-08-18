@@ -58,8 +58,10 @@ def sample_from_probs(probs, rng):
     rand_num = rng.random()
     return int(np.searchsorted(cumulative, rand_num))
 
-# Step 6 - greedy_select (not yet solved)
-# TODO: implement
+# Step 6 - greedy_select
+def greedy_select(logits):
+    # TODO: return the index of the maximum logit (ties -> lowest index).
+    return np.argmax(logits)
 
 # Step 7 - build_vocab (not yet solved)
 # TODO: implement
