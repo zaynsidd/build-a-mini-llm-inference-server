@@ -107,8 +107,19 @@ def encode_prompt(text, vocab, add_bos=True):
     
     return tokens
 
-# Step 9 - decode_tokens (not yet solved)
-# TODO: implement
+# Step 9 - decode_tokens
+def decode_tokens(token_ids, vocab, skip_special=True):
+    # TODO: convert token ids back into a string using vocab['id_to_token'], optionally skipping specials.
+    rebuilt = []
+    if skip_special:
+        for num in token_ids:
+            if num > 1:
+                rebuilt.append(vocab['id_to_token'][num])
+        return "".join(rebuilt)
+    
+    for num in token_ids:
+        rebuilt.append(vocab['id_to_token'][num])
+    return "".join(rebuilt)
 
 # Step 10 - embed_tokens (not yet solved)
 # TODO: implement
