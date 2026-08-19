@@ -121,8 +121,12 @@ def decode_tokens(token_ids, vocab, skip_special=True):
         rebuilt.append(vocab['id_to_token'][num])
     return "".join(rebuilt)
 
-# Step 10 - embed_tokens (not yet solved)
-# TODO: implement
+# Step 10 - embed_tokens
+import numpy as np
+
+def embed_tokens(token_ids, embedding_matrix):
+    # TODO: return the (T, D) embedding rows for each token id in token_ids
+    return embedding_matrix[token_ids]
 
 # Step 11 - linear_projection (not yet solved)
 # TODO: implement
