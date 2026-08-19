@@ -63,8 +63,33 @@ def greedy_select(logits):
     # TODO: return the index of the maximum logit (ties -> lowest index).
     return int(np.argmax(logits))
 
-# Step 7 - build_vocab (not yet solved)
-# TODO: implement
+# Step 7 - build_vocab
+def build_vocab(corpus, special_tokens):
+    # TODO: build a character-level vocab; specials get the lowest ids, then sorted unique chars.
+    count = 0
+    parent_dict = dict()
+    parent_dict['id_to_token'] = []
+    parent_dict['token_to_id'] = dict()
+    seen = set()
+    
+    for token in special_tokens:
+        if token not in seen:
+            parent_dict['token_to_id'][token] = count
+            parent_dict['id_to_token'].append(token)
+            count += 1
+
+    for token in corpus:
+        new_token = sorted(token)
+        for t in new_token:
+            if t not in seen:
+                seen.add(t)
+    
+    for t in sorted(seen):
+        parent_dict['token_to_id'][t] = count
+        parent_dict['id_to_token'].append(t)
+        count += 1
+
+    return parent_dict
 
 # Step 8 - encode_prompt (not yet solved)
 # TODO: implement
