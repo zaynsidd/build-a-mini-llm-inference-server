@@ -157,8 +157,19 @@ def append_kv(cache, k_new, v_new):
     cache['length'] += shape[1]
     return cache
 
-# Step 14 - causal_attention (not yet solved)
-# TODO: implement
+# Step 14 - causal_attention
+import numpy as np
+
+def causal_attention(q, k, v, is_causal=True):
+    # TODO: scaled dot-product attention with optional causal mask, returns (Tq, D)
+    storage = np.matmul(q, np.transpose(k))
+    storage /= np.sqrt(q.shape[-1])
+
+    if is_causal:
+        mask = np.triu(np.ones((storage.shape[0], storage.shape[1]), dtype=bool), k=1 + (storage.shape[1] - storage.shape[0]))
+        storage[mask] = -np.inf
+    storage = stable_softmax((storage))
+    return storage @ v
 
 # Step 15 - model_prefill (not yet solved)
 # TODO: implement
