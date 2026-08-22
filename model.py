@@ -171,8 +171,22 @@ def causal_attention(q, k, v, is_causal=True):
     storage = stable_softmax((storage))
     return storage @ v
 
-# Step 15 - model_prefill (not yet solved)
-# TODO: implement
+# Step 15 - model_prefill
+def model_prefill(token_ids, params):
+    # TODO: embed tokens, project Q/K/V, fill the KV cache, run causal attention, return last-position logits.
+    x = embed_tokens(token_ids, params['embedding'])
+    Q = linear_projection(x, params['Wq'])
+    K = linear_projection(x, params['Wk'])
+    V = linear_projection(x, params['Wv'])
+
+    cache = init_kv_cache(params['max_seq_len'], params['embedding'].shape[1])
+    cache = append_kv(cache, K, V)
+
+    A = causal_attention(Q, K, V, is_causal=True)
+    A = linear_projection(A, params['Wo'])
+    logits = linear_projection(A[-1], params['W_out'])
+    logits = logits.tolist()
+    return (logits, cache)
 
 # Step 16 - model_decode_step (not yet solved)
 # TODO: implement
